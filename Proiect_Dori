@@ -5,15 +5,14 @@ class Cont
     char *nume,*prenume;
     double sold=0;
     public:
-    bool nume_prenume(char *n, char *p)
+    void nume_prenume(char *n, char *p)
     {
         if(n!=NULL &&p!=NULL)
         {
             nume=n;
             prenume=p;
-            return 1;
         }
-        else return 0;
+        else return;
     }
     char* get_nume()
     {
