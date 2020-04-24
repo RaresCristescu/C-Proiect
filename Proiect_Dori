@@ -1,1 +1,123 @@
-#include<iostream>
+#include <iostream>
+using namespace std;
+class Cont
+{
+    char *nume,*prenume;
+    double sold=0;
+    public:
+    bool nume_prenume(char *n, char *p)
+    {
+        if(n!=NULL &&p!=NULL)
+        {
+            nume=n;
+            prenume=p;
+            return 1;
+        }
+        else return 0;
+    }
+    char* get_nume()
+    {
+        return nume;
+    }
+    char* get_prenume()
+    {
+        return prenume;
+    }
+    double depunere(double x)
+    {
+        if(x<0)
+        {
+            cout<<"Suma invalida"<<endl;
+            return sold;
+        }
+        else {
+            sold=sold+x;
+            return sold;
+        }
+    }
+    double retragere(double x)
+    {
+        if(x<0)
+        {
+            cout<<"Suma invalida"<<endl;
+            return sold;
+        }
+        else if(x>sold)
+        {
+            cout<<"Fonduri insuficiente"<<endl;
+            return sold;
+        }
+        else
+        {
+            sold=sold-x;
+            return sold;
+        }
+    }
+    double citire_sold()
+    {
+        return sold;
+    }
+};
+class Depozit : public Cont
+{
+    double procent=0;
+    public:
+    double capitalizare(double x)
+    {
+        if(x<0)
+        {
+            cout<<"Dobanda invalida"<<endl;
+            return citire_sold();
+        }
+        else
+        {
+            procent=x/100;
+            depunere(citire_sold()*procent);
+            return citire_sold();
+        }
+    }
+};
+int main()
+{
+    Depozit d;
+    double sold;
+    char nume[20],prenume[20],comanda;
+    cout<<"Nume: ";
+    cin>>nume;
+    cout<<"Prenume: ";
+    cin>>prenume;
+    cout<<"Sold: ";
+    cin>>sold;
+    d.nume_prenume(nume,prenume);
+    d.depunere(sold);
+    while(1)
+    {
+        cout<<"Alegeti una din obtiuni:"<<endl<<"d - pentru depunere"<<endl<<"r - pentru retragere"<<endl;
+        cout<<"c - pentru capitalizare"<<endl<<"t - pentru tiparirea soldului"<<endl<<"o - pentru oprirea programului"<<endl;
+        cin>>comanda;
+        switch (comanda)
+        {
+        case 'd':
+            cout<<"Introduceti soldul pe care doriti sa il adaugati: ";
+            cin>> sold;
+            d.depunere(sold);
+            break;
+        case 'r':
+            cout<<"Introduceti soldul pe care doriti sa il retrageti: ";
+            cin>>sold;
+            d.retragere(sold);
+            break;
+        case 'c':
+            cout<<"Introduceti procentul cu care doriti sa capitalizati: ";
+            cin>>sold;
+            d.capitalizare(sold);
+            break;
+        case 't':
+            cout<<"Soldul curent al contului este: "<<d.citire_sold()<<endl;
+            break;
+        case 'o':
+            return 0;
+        }
+    }
+    return 0;
+}
